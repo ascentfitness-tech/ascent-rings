@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ascent Method — One Body. Build It Right.</title>
+<meta name="description" content="Training that adapts to your performance. Earn every progression through quality movement, purposeful action, and disciplined execution.">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#1A1A1A;
+    --surface:#212121;
+    --accent:#39FF14;
+    --text:#EDEDED;
+    --muted:#8C8C8C;
+    --rule:#2E2E2E;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:'Poppins',-apple-system,sans-serif;
+    line-height:1.65;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:940px;margin:0 auto;padding:0 24px}
+
+  /* ---- nav ---- */
+  nav{
+    padding:28px 0;
+    display:flex;justify-content:space-between;align-items:center;
+    border-bottom:1px solid var(--rule);
+  }
+  .logo{font-weight:700;font-size:1.05rem;letter-spacing:-0.01em}
+  .logo span{color:var(--accent)}
+  nav a{
+    color:var(--muted);text-decoration:none;font-size:0.85rem;
+    font-family:'JetBrains Mono',monospace;
+  }
+  nav a:hover{color:var(--accent)}
+
+  /* ---- hero ---- */
+  header{padding:80px 0 40px}
+  .eyebrow{
+    font-family:'JetBrains Mono',monospace;
+    font-size:0.72rem;letter-spacing:0.18em;text-transform:uppercase;
+    color:var(--accent);margin-bottom:20px;
+  }
+  h1{
+    font-weight:700;font-size:clamp(2.2rem,6vw,3.6rem);
+    line-height:1.05;letter-spacing:-0.03em;margin-bottom:22px;
+  }
+  h1 em{font-style:normal;color:var(--accent)}
+  .lede{
+    font-size:clamp(1rem,2.2vw,1.15rem);
+    color:var(--muted);max-width:56ch;margin-bottom:36px;
+  }
+
+  /* ---- signature: the progression curve ---- */
+  .curve-block{
+    background:var(--surface);
+    border:1px solid var(--rule);
+    border-radius:10px;
+    padding:28px 24px 20px;
+    margin:0 0 16px;
+  }
+  .curve-head{
+    display:flex;justify-content:space-between;align-items:baseline;
+    margin-bottom:22px;flex-wrap:wrap;gap:8px;
+  }
+  .curve-title{
+    font-family:'JetBrains Mono',monospace;
+    font-size:0.75rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);
+  }
+  .curve-title b{color:var(--text);font-weight:500}
+  svg{width:100%;height:auto;display:block;overflow:visible}
+  .bar{fill:var(--rule);transition:fill .25s}
+  .bar.peak{fill:var(--accent)}
+  .bar.deload{fill:#3A3A3A}
+  .wk{
+    font-family:'JetBrains Mono',monospace;font-size:8px;fill:var(--muted);
+  }
+  .anno{
+    font-family:'JetBrains Mono',monospace;font-size:8.5px;fill:var(--accent);
+  }
+  .anno-line{stroke:var(--accent);stroke-width:1;stroke-dasharray:2 2;opacity:.5}
+  .curve-key{
+    display:flex;gap:20px;flex-wrap:wrap;
+    font-family:'JetBrains Mono',monospace;font-size:0.68rem;color:var(--muted);
+    padding-top:16px;margin-top:4px;border-top:1px solid var(--rule);
+  }
+  .swatch{display:inline-block;width:9px;height:9px;border-radius:2px;margin-right:6px;vertical-align:middle}
+
+  .curve-caption{
+    color:var(--muted);font-size:0.85rem;margin-bottom:56px;
+  }
+  .curve-caption b{color:var(--text);font-weight:400}
+
+  /* ---- sections ---- */
+  section{padding:56px 0;border-top:1px solid var(--rule)}
+  h2{
+    font-size:1.5rem;font-weight:700;letter-spacing:-0.02em;margin-bottom:18px;
+  }
+  .sec-label{
+    font-family:'JetBrains Mono',monospace;font-size:0.7rem;
+    letter-spacing:0.16em;text-transform:uppercase;color:var(--accent);
+    margin-bottom:12px;
+  }
+  p.body{color:var(--muted);max-width:62ch;margin-bottom:14px}
+  p.body strong{color:var(--text);font-weight:400}
+
+  /* method rows — the sequence IS the content */
+  .seq{margin-top:28px;border-top:1px solid var(--rule)}
+  .seq-row{
+    display:grid;grid-template-columns:auto 1fr;gap:18px;
+    padding:16px 0;border-bottom:1px solid var(--rule);align-items:baseline;
+  }
+  .seq-k{
+    font-family:'JetBrains Mono',monospace;font-size:0.72rem;
+    color:var(--accent);white-space:nowrap;letter-spacing:0.06em;
+  }
+  .seq-v{color:var(--text);font-size:0.95rem}
+  .seq-v span{color:var(--muted);display:block;font-size:0.85rem;margin-top:2px}
+
+  /* environments */
+  .envs{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;margin-top:26px}
+  .env{
+    background:var(--surface);border:1px solid var(--rule);border-radius:8px;padding:20px;
+  }
+  .env h3{
+    font-size:1rem;font-weight:600;margin-bottom:6px;
+  }
+  .env p{color:var(--muted);font-size:0.85rem}
+
+  /* ---- CTA ---- */
+  .cta-zone{
+    background:var(--surface);border:1px solid var(--rule);
+    border-radius:10px;padding:40px 32px;text-align:center;margin:56px 0 0;
+  }
+  .cta-zone h2{margin-bottom:10px}
+  .cta-zone p{color:var(--muted);margin-bottom:26px;font-size:0.95rem}
+  .btn{
+    display:inline-block;background:var(--accent);color:#0F0F0F;
+    font-weight:700;font-size:0.95rem;text-decoration:none;
+    padding:14px 30px;border-radius:7px;transition:transform .15s,box-shadow .15s;
+  }
+  .btn:hover{transform:translateY(-1px);box-shadow:0 6px 22px rgba(57,255,20,.22)}
+  .btn.ghost{
+    background:transparent;color:var(--accent);border:1px solid var(--accent);
+    margin-left:8px;
+  }
+  .btn.ghost:hover{background:rgba(57,255,20,.08);box-shadow:none}
+  .cta-note{
+    font-family:'JetBrains Mono',monospace;font-size:0.7rem;color:var(--muted);
+    margin-top:18px;letter-spacing:0.04em;
+  }
+
+  /* ---- footer ---- */
+  footer{
+    border-top:1px solid var(--rule);padding:32px 0 56px;margin-top:56px;
+    display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;
+    font-size:0.82rem;color:var(--muted);
+  }
+  footer a{color:var(--muted);text-decoration:none;margin-right:16px}
+  footer a:hover{color:var(--accent)}
+  .sig{font-family:'JetBrains Mono',monospace;font-size:0.72rem}
+
+  @media (max-width:600px){
+    header{padding:56px 0 32px}
+    .curve-key{gap:12px;font-size:0.62rem}
+  }
+  @media (prefers-reduced-motion:reduce){
+    *{transition:none!important;scroll-behavior:auto!important}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <nav>
+    <div class="logo">Ascent<span>.</span></div>
+    <a href="#method">The Method</a>
+  </nav>
+
+  <header>
+    <div class="eyebrow">One body. Build it right.</div>
+    <h1>Training that reads<br>what you actually did.</h1>
+    <p class="lede">Most apps hand you a template and hope it fits. Ascent builds your program from your performance — how you moved, how you recovered, what you lifted. You don't get the next step until you've earned it.</p>
+  </header>
+
+  <!-- SIGNATURE: the real progression curve from a Performance block -->
+  <div class="curve-block">
+    <div class="curve-head">
+      <div class="curve-title">Performance block · <b>main lift, 12 weeks</b></div>
+      <div class="curve-title">intensity →</div>
+    </div>
+
+    <svg viewBox="0 0 640 190" role="img" aria-label="A twelve week training block showing accumulation, intensification, a taper at week ten, and a peak at weeks eleven and twelve.">
+      <!-- bars: value = relative intensity. wk10 deload dips, wk11-12 peak -->
+      <!-- w1 -->
+      <rect class="bar" x="8"   y="104" width="34" height="56" rx="2"/>
+      <rect class="bar" x="58"  y="104" width="34" height="56" rx="2"/>
+      <rect class="bar" x="108" y="88"  width="34" height="72" rx="2"/>
+      <rect class="bar" x="158" y="80"  width="34" height="80" rx="2"/>
+      <rect class="bar" x="208" y="80"  width="34" height="80" rx="2"/>
+      <rect class="bar" x="258" y="72"  width="34" height="88" rx="2"/>
+      <rect class="bar" x="308" y="48"  width="34" height="112" rx="2"/>
+      <rect class="bar" x="358" y="48"  width="34" height="112" rx="2"/>
+      <rect class="bar" x="408" y="48"  width="34" height="112" rx="2"/>
+      <!-- w10 deload -->
+      <rect class="bar deload" x="458" y="118" width="34" height="42" rx="2"/>
+      <!-- w11-12 peak -->
+      <rect class="bar peak" x="508" y="34" width="34" height="126" rx="2"/>
+      <rect class="bar peak" x="558" y="22" width="34" height="138" rx="2"/>
+
+      <!-- week labels -->
+      <text class="wk" x="19"  y="174">W1</text>
+      <text class="wk" x="69"  y="174">W2</text>
+      <text class="wk" x="119" y="174">W3</text>
+      <text class="wk" x="169" y="174">W4</text>
+      <text class="wk" x="219" y="174">W5</text>
+      <text class="wk" x="269" y="174">W6</text>
+      <text class="wk" x="319" y="174">W7</text>
+      <text class="wk" x="369" y="174">W8</text>
+      <text class="wk" x="419" y="174">W9</text>
+      <text class="wk" x="466" y="174">W10</text>
+      <text class="wk" x="516" y="174">W11</text>
+      <text class="wk" x="566" y="174">W12</text>
+
+      <!-- annotations -->
+      <line class="anno-line" x1="475" y1="112" x2="475" y2="96"/>
+      <text class="anno" x="437" y="90">taper</text>
+      <line class="anno-line" x1="575" y1="16" x2="575" y2="8"/>
+      <text class="anno" x="556" y="6">peak</text>
+    </svg>
+
+    <div class="curve-key">
+      <div><span class="swatch" style="background:var(--rule)"></span>build</div>
+      <div><span class="swatch" style="background:#3A3A3A"></span>taper — shed fatigue, keep the pattern</div>
+      <div><span class="swatch" style="background:var(--accent)"></span>peak — express what you built</div>
+    </div>
+  </div>
+  <p class="curve-caption">This is a real block. <b>Nine weeks of accumulation, a pattern-matched taper at week ten, then two weeks to express it.</b> Every block is built this way — and every session inside it adjusts to what you actually logged.</p>
+
+  <!-- METHOD -->
+  <section id="method">
+    <div class="sec-label">The Method</div>
+    <h2>Earn every progression.</h2>
+    <p class="body">Ascent builds resilient athletes through <strong>quality movement, purposeful action, and disciplined execution.</strong> Move well before you move hard. Own positions before producing force. Build athleticism through integrated movement — not isolated muscle work.</p>
+    <p class="body">Every session follows the same order, because the order is the coaching.</p>
+
+    <div class="seq">
+      <div class="seq-row">
+        <div class="seq-k">01 / PREP</div>
+        <div class="seq-v">Earn the right to load<span>Tissue temperature, range, readiness.</span></div>
+      </div>
+      <div class="seq-row">
+        <div class="seq-k">02 / STABILITY</div>
+        <div class="seq-v">Own the position<span>Create stiffness while moving elsewhere. Before you load it.</span></div>
+      </div>
+      <div class="seq-row">
+        <div class="seq-k">03 / STRENGTH</div>
+        <div class="seq-v">Produce force<span>Compound work on a real progression, not a guess.</span></div>
+      </div>
+      <div class="seq-row">
+        <div class="seq-k">04 / CAPACITY</div>
+        <div class="seq-v">Build the engine<span>Conditioning with a purpose. Never random.</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ADAPTS -->
+  <section>
+    <div class="sec-label">How it works</div>
+    <h2>Your data writes the program.</h2>
+    <p class="body">After every session, Ascent reads your performance against your readiness and adjusts what comes next — load, volume, progression. When you're ready to move up, you move up. When you're not, you don't.</p>
+    <p class="body">Two athletes with the same goal get two different programs, <strong>because they're two different bodies.</strong></p>
+  </section>
+
+  <!-- ENVIRONMENTS -->
+  <section>
+    <div class="sec-label">Train with what you have</div>
+    <h2>Three environments.</h2>
+    <div class="envs">
+      <div class="env">
+        <h3>Movement</h3>
+        <p>You and gravity. Full programming, no equipment.</p>
+      </div>
+      <div class="env">
+        <h3>Build</h3>
+        <p>Dumbbells and kettlebells. Garage, spare room, anywhere.</p>
+      </div>
+      <div class="env">
+        <h3>Complete</h3>
+        <p>Full gym. Barbell, rack, the works.</p>
+      </div>
+    </div>
+    <p class="body" style="margin-top:22px">Each one runs Beginner, Intermediate, and Performance blocks. Start with a free four-week Foundations block — no card, no trial clock.</p>
+  </section>
+
+  <!-- CTA -->
+  <div class="cta-zone">
+    <h2>Build it right.</h2>
+    <p>Coming to the App Store.</p>
+    <!-- SWAP AT LAUNCH: replace ghost button with App Store link -->
+    <a class="btn" href="https://instagram.com/trainascent" target="_blank" rel="noopener">Follow the build</a>
+    <div class="cta-note">iOS · free Foundations block · $19.99/mo or $149.99/yr</div>
+  </div>
+
+  <footer>
+    <div>
+      <a href="support.html">Support</a>
+      <a href="privacy.html">Privacy</a>
+      <a href="terms.html">Terms</a>
+    </div>
+    <div class="sig">© 2026 Ascent Method</div>
+  </footer>
+
+</div>
+</body>
+</html>
